@@ -6,33 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/GameFiles/SCENES/LVL1.unity
-    guid: 6187fe3156aef9a4088cb4eebcdd9ad8
-  - enabled: 1
-    path: Assets/GameFiles/SCENES/LVL2.unity
-    guid: b66f7f816d77160459d12b77d3662fd0
-  - enabled: 1
-    path: Assets/GameFiles/SCENES/LVL3.unity
-    guid: 76e6d1e844a956442b1c8023efa1e348
-  - enabled: 1
-    path: Assets/GameFiles/SCENES/LVL4.unity
-    guid: c4e223c40978bf54fbd18f4da9f4003d
-  - enabled: 1
-    path: Assets/GameFiles/SCENES/LVL5.unity
-    guid: a89f715d49edac441a5ed003bc07183e
-  - enabled: 1
-    path: Assets/GameFiles/SCENES/LVL6.unity
-    guid: f32816da843808249b052e017dd8ed03
-  - enabled: 1
-    path: Assets/GameFiles/SCENES/LVL7.unity
-    guid: 49e736ffd37324d419ad590009f61a64
-  - enabled: 1
-    path: Assets/GameFiles/SCENES/LVL8.unity
-    guid: e8551eefe3c252e44bba6b1be45eddc8
-  - enabled: 1
-    path: Assets/GameFiles/SCENES/LVL9.unity
-    guid: 1042e07a3a604bc4493950c8980ad53d
-  - enabled: 1
-    path: Assets/GameFiles/SCENES/LVL10.unity
-    guid: 230b15fed453d9d4ca5142af2d6f7924
+    path: Assets/UnityProjectFiles/_Scenes/Game.unity
+    guid: 754dddb797f1d764bb2ede5720aca62f
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0

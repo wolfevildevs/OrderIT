@@ -40,8 +40,6 @@ namespace RunnerGame.Player
         private bool isKnockedBack = false;
         private float knockbackTimer = 0f;
         private bool hasSwipedUpInCurrentTouch = false;
-
-        // --- حل مشكلة الطيران: وقت مستقطع لمنع تصفير السرعة ---
         private float jumpCooldownTimer = 0f;
 
         // Exposed property for PlayerVisualsManager animation syncs
@@ -60,7 +58,8 @@ namespace RunnerGame.Player
             if (playerData != null)
             {
                 playerData.ResetData();
-                playerData.isMoving = true;
+                // FIXED: Stopped the controller from forcing movement on start natively
+                playerData.isMoving = false; 
             }
             CheckGrounded();
         }
@@ -68,6 +67,9 @@ namespace RunnerGame.Player
         private void Update()
         {
             if (playerData == null || playerData.isDead) return;
+
+            // FIXED: Prevent any input processing or movement bounds logic if the game has not started
+            if (!playerData.isMoving) return;
 
             // Update timers
             if (jumpCooldownTimer > 0f)
@@ -95,7 +97,8 @@ namespace RunnerGame.Player
 
         private void FixedUpdate()
         {
-            if (playerData == null || playerData.isDead || isKnockedBack) return;
+            // FIXED: Blocked physical physics updates completely if player movement is locked by architecture
+            if (playerData == null || playerData.isDead || isKnockedBack || !playerData.isMoving) return;
 
             MovePlayer();
         }
@@ -112,7 +115,6 @@ namespace RunnerGame.Player
             float desiredHorizontalVelocity = (targetX - rb.position.x) / Time.fixedDeltaTime;
             float yVelocity = rb.linearVelocity.y;
             
-            // التعديل السحري هنا: لا تصفر السرعة العمودية إذا كان الـ Cooldown فعالاً
             if (isGrounded && jumpCooldownTimer <= 0f)
             {
                 if (yVelocity > 0) yVelocity = 0f;
@@ -180,16 +182,13 @@ namespace RunnerGame.Player
 
         private void Jump()
         {
-            // تفعيل الـ Cooldown فوراً لمدة 0.15 ثانية لإعطاء فرصة للـ Rigidbody للارتفاع
             jumpCooldownTimer = 0.15f;
             isGrounded = false; 
-            
             rb.linearVelocity = new Vector3(rb.linearVelocity.x, playerData.jumpForce, rb.linearVelocity.z);
         }
 
         private void CheckGrounded()
         {
-            // طالما الـ Cooldown شغال، نعتبر اللاعب طائراً إجبارياً حتى تخرج الـ SphereCast من الأرض
             if (jumpCooldownTimer > 0f)
             {
                 isGrounded = false;

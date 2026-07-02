@@ -16,8 +16,9 @@ MonoBehaviour:
   sideMovementSpeed: 0.7
   roadLimitX: 10
   currentScore: 0
-  isDead: 1
-  isMoving: 1
+  currentCurrency: 0
+  isDead: 0
+  isMoving: 0
   jumpForce: 10
   customGravity: -25
   swipeThresholdY: 5

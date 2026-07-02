@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using RunnerGame.Player;
+using RunnerGame.Level;
 
 namespace RunnerGame.Core
 {
@@ -15,6 +16,7 @@ namespace RunnerGame.Core
 
         [Header("Data References")]
         [SerializeField] private PlayerDataSO playerData;
+        [SerializeField] private GameLevelsDatabaseSO levelsDatabase;
 
         [Header("Architecture Events (Scriptable Objects)")]
         [SerializeField] private GameEventSO onLevelStartedEvent;
@@ -34,7 +36,6 @@ namespace RunnerGame.Core
         {
             currentState = GameState.WaitingToStart;
             
-            // Forcefully lock player movement at level initialization
             if (playerData != null)
             {
                 playerData.ResetData();
@@ -55,12 +56,26 @@ namespace RunnerGame.Core
             if (onLevelStartedEvent != null) onLevelStartedEvent.Raise();
         }
 
-        public void CompleteLevel()
+        /// <summary>
+        /// Finalizes the level victory state, aggregates rewards into the master wallet, and dispatches architecture events.
+        /// </summary>
+        public void CompleteLevel(int totalCalculatedScore, int totalCalculatedCurrency)
         {
             if (currentState != GameState.Playing) return;
 
             currentState = GameState.Won;
-            if (playerData != null) playerData.isMoving = false;
+            
+            if (playerData != null)
+            {
+                playerData.isMoving = false;
+                playerData.currentScore = totalCalculatedScore;
+                
+                // Track run specific earnings and commit them permanently to the lifetime wallet
+                playerData.currentCurrencyEarnedInRun = totalCalculatedCurrency;
+                playerData.totalWalletCurrency += totalCalculatedCurrency; 
+                
+                Debug.Log($"Level Completed! Earned: {totalCalculatedCurrency}. Total Wallet: {playerData.totalWalletCurrency}");
+            }
 
             if (onLevelWonEvent != null) onLevelWonEvent.Raise();
         }
@@ -77,7 +92,6 @@ namespace RunnerGame.Core
 
         private void Update()
         {
-            // Monitor player health/bounds metrics from the persistent scriptable layer
             if (currentState == GameState.Playing && playerData != null && playerData.isDead)
             {
                 LevelFailed();
@@ -85,6 +99,36 @@ namespace RunnerGame.Core
         }
 
         public void RestartLevel() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        public void NextLevel() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        
+        /// <summary>
+        /// Validates next level existence via database bounds check before incrementing indices to prevent empty scene errors.
+        /// </summary>
+        public void NextLevel()
+        {
+            if (playerData == null || levelsDatabase == null) return;
+
+            int nextLevelIndex = playerData.currentLevelIndex + 1;
+
+            // Safe progressive check: only increment index if a valid LevelDataSO asset is found ahead
+            if (levelsDatabase.HasLevel(nextLevelIndex))
+            {
+                playerData.currentLevelIndex++;
+            }
+            else
+            {
+                Debug.LogWarning("No more unique levels inside GameLevelsDatabaseSO! Restarting from Level 1 or clamping.");
+                playerData.currentLevelIndex = levelsDatabase.TotalLevels - 1;
+            }
+            
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+        /// <summary>
+        /// Reloads the active scene without altering progression state to fallback into the main menu layout seamlessly.
+        /// </summary>
+        public void GoToMainMenu()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 }

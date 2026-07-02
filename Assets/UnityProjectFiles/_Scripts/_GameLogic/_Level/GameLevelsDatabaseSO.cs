@@ -20,5 +20,15 @@ namespace RunnerGame.Level
             int safeIndex = levelIndex % allLevels.Count;
             return allLevels[safeIndex];
         }
+
+        /// <summary>
+        /// Validates if a level index exists within the database collection boundaries.
+        /// </summary>
+        public bool HasLevel(int levelIndex)
+        {
+            if (allLevels == null || allLevels.Count == 0) return false;
+            return levelIndex < allLevels.Count;
+        }
+        
     }
 }

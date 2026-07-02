@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RunnerGame.Level.GameLevelsDatabaseSO
   allLevels:
   - {fileID: 11400000, guid: 9c9aa952c6c33274a9d679109bc6ed3c, type: 2}
+  - {fileID: 11400000, guid: 7abcdec68379d7240b63797572a5d3bb, type: 2}

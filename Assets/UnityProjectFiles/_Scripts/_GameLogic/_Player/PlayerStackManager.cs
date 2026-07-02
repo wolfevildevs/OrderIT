@@ -152,5 +152,22 @@ namespace RunnerGame.Player
             collectedBoxes.Clear();
             playerData.currentBoxCount = 0;
         }
+
+        /// <summary>
+        /// Extracts and hands over control of all collected boxes to the finish line sequence.
+        /// </summary>
+        public List<Transform> TakeStackForWinSequence()
+        {
+            // Prevent the Update loop from continuing to clear or manage the stack positionally
+            isStackCleared = true; 
+            
+            // Create a shadow copy of the list to return safely
+            List<Transform> boxesToAnimate = new List<Transform>(collectedBoxes);
+            
+            // Clear internal tracking safely without destroying objects
+            collectedBoxes.Clear();
+            
+            return boxesToAnimate;
+        }
     }
 }

@@ -7,5 +7,6 @@ AssetOrigin:
   productId: 109565
   packageName: Cartoon FX Remaster Free
   packageVersion: R 1.5.0
-  assetPath: Assets/JMO Assets/Cartoon FX Remaster/CFXRF Demo.unity
+  assetPath: Assets/UnityProjectFiles/_Art/_VFX/JMO Assets/Cartoon FX Remaster/CFXRF
+    Demo.unity
   uploadId: 836238

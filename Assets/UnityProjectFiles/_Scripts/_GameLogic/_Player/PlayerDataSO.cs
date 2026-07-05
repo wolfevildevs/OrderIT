@@ -22,7 +22,10 @@ public class PlayerDataSO : ScriptableObject
     [Header("Jump Settings")]
     public float jumpForce = 8f;
     public float customGravity = -25f; 
-    public float swipeThresholdY = 50f; 
+    public float swipeThresholdY = 50f;
+
+    [Header("Shop Save Data Matrix")]
+    [SerializeField] private string _equippedItemId = "Default";
 
     /// <summary>
     /// Resets only the immediate live run metrics, preserving the continuous wallet and level progression.
@@ -44,5 +47,37 @@ public class PlayerDataSO : ScriptableObject
         ResetData();
         totalWalletCurrency = 0;
         //currentLevelIndex = 0;
+    }
+
+    public string equippedItemId
+    {
+        get
+        {
+            return PlayerPrefs.GetString("EquippedItemId", "Default");
+        }
+        set
+        {
+            _equippedItemId = value;
+            PlayerPrefs.SetString("EquippedItemId", _equippedItemId);
+            PlayerPrefs.Save();
+        }
+    }
+
+    /// <summary>
+    /// Checks if a specific item has been purchased and saved to PlayerPrefs.
+    /// </summary>
+    public bool IsItemPurchased(string itemId)
+    {
+        if (itemId == "Default") return true; // Default item is always unlocked
+        return PlayerPrefs.GetInt("ShopItem_" + itemId, 0) == 1;
+    }
+
+    /// <summary>
+    /// Unlocks an item permanently and registers it into PlayerPrefs storage layout safely.
+    /// </summary>
+    public void PurchaseItem(string itemId)
+    {
+        PlayerPrefs.SetInt("ShopItem_" + itemId, 1);
+        PlayerPrefs.Save();
     }
 }

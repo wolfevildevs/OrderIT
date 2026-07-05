@@ -57,7 +57,7 @@ namespace RunnerGame.Core
         }
 
         /// <summary>
-        /// Finalizes the level victory state, aggregates rewards into the master wallet, and dispatches architecture events.
+        /// Finalizes the level victory state, aggregates rewards into the master wallet permanently, and dispatches architecture events.
         /// </summary>
         public void CompleteLevel(int totalCalculatedScore, int totalCalculatedCurrency)
         {
@@ -70,7 +70,7 @@ namespace RunnerGame.Core
                 playerData.isMoving = false;
                 playerData.currentScore = totalCalculatedScore;
                 
-                // Track run specific earnings and commit them permanently to the lifetime wallet
+                // Track run specific earnings and commit them permanently to the lifetime wallet immediately
                 playerData.currentCurrencyEarnedInRun = totalCalculatedCurrency;
                 playerData.totalWalletCurrency += totalCalculatedCurrency; 
                 

@@ -13,14 +13,16 @@ MonoBehaviour:
   m_Name: MainPlayer
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDataSO
   forwardSpeed: 5
-  sideMovementSpeed: 0.7
+  sideMovementSpeed: 1
   roadLimitX: 10
   currentScore: 0
-  currentCurrency: 0
-  isDead: 0
+  currentCurrencyEarnedInRun: 0
+  isDead: 1
   isMoving: 0
-  jumpForce: 10
+  currentBoxCount: 0
+  totalWalletCurrency: 0
+  currentLevelIndex: 0
+  jumpForce: 11
   customGravity: -25
   swipeThresholdY: 5
-  currentBoxCount: 0
-  currentLevelIndex: 0
+  _equippedItemId: Default

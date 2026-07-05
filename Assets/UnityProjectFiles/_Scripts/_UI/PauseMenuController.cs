@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using RunnerGame.Core;
+using RunnerGame.Audio;
 
 namespace RunnerGame.UI
 {
@@ -37,6 +38,8 @@ namespace RunnerGame.UI
             if (pauseMenuPanel != null) pauseMenuPanel.SetActive(true);
             
             Time.timeScale = 0f; // Halt physics, input delta translations and internal timers instantly
+                AudioManager.Instance.PlaySFX("Click");
+
         }
 
         public void ResumeGame()
@@ -45,12 +48,16 @@ namespace RunnerGame.UI
             if (pauseMenuPanel != null) pauseMenuPanel.SetActive(false);
             
             Time.timeScale = 1f; // Restore game physical loops execution
+                AudioManager.Instance.PlaySFX("Click");
+
         }
 
         public void ReturnToMainMenu()
         {
             Time.timeScale = 1f; // Critical: always restore time scale before unloading scene objects
-            GameManager.Instance.GoToMainMenu();
+                GameManager.Instance.GoToMainMenu();
+                    AudioManager.Instance.PlaySFX("Click");
+
         }
     }
 }

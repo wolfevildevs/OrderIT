@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f1389d7be8987741809d6e159225f31, type: 3}
+  m_Name: Suit
+  m_EditorClassIdentifier: Assembly-CSharp::RunnerGame.Shop.ShopItemSO
+  itemId: Suit_1
+  itemName: 
+  itemIcon: {fileID: 21300000, guid: e6b9d233f82c6d245a4e5d9266118932, type: 3}
+  sceneObjectName: Suit
+  cost: 1000

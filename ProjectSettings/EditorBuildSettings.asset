@@ -5,8 +5,15 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/UnityProjectFiles/_Scenes/Game.unity
     guid: 754dddb797f1d764bb2ede5720aca62f
-  m_configObjects: {}
+  - enabled: 1
+    path: Assets/UnityProjectFiles/_ADD-ONS/BOXOPHOBIC/Skybox Cubemap Extended/Demo/Demo
+      Day.unity
+    guid: 67adac43bcf286444be612074ab04f75
+  m_configObjects:
+    com.unity.adaptivePerformance.basic.provider_settings: {fileID: 11400000, guid: 60df118c519771e44a96d9ded1139751, type: 2}
+    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 918865e1a6f720c4bbdffe9cea23941b, type: 2}
+    com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 66e415eb97aea534989223c6c77c34ed, type: 2}
   m_UseUCBPForAssetBundles: 0

@@ -8,7 +8,7 @@ namespace RunnerGame.UI
 {
     /// <summary>
     /// Drives an oscillating UI gauge that lets the player multiply their run earnings 
-    /// via simulated ads or luck mechanics.
+    /// via simulated ads or luck mechanics with a built-in transition delay.
     /// </summary>
     public class RewardMultiplierController : MonoBehaviour
     {
@@ -26,6 +26,9 @@ namespace RunnerGame.UI
         [SerializeField] private float leftLimitX = -150f;
         [SerializeField] private float rightLimitX = 150f;
 
+        [Header("Transition Settings")]
+        [SerializeField] private float postAdDelay = 3f; // 3-second delay configuration
+
         private bool isOscillating = true;
         private int baseRunCurrency = 0;
         private int finalSelectedMultiplier = 1;
@@ -34,10 +37,15 @@ namespace RunnerGame.UI
         {
             if (playerData == null) return;
             
+            // Fetch the baseline currency earned during this specific run safely
             baseRunCurrency = playerData.currentCurrencyEarnedInRun;
             isOscillating = true;
             finalSelectedMultiplier = 1;
             
+            // Re-enable interactions upon opening the panel layout securely
+            watchAdButton.interactable = true;
+            claimNormalButton.interactable = true;
+
             watchAdButton.onClick.RemoveAllListeners();
             claimNormalButton.onClick.RemoveAllListeners();
             
@@ -62,7 +70,6 @@ namespace RunnerGame.UI
 
         private void EvaluateCurrentMultiplier(float normalizedPosition)
         {
-            // Simple mapping: Center yields x5, edges yield x2, sweet spots yield x3
             if (normalizedPosition >= 0.4f && normalizedPosition <= 0.6f)
             {
                 finalSelectedMultiplier = 5;
@@ -88,29 +95,57 @@ namespace RunnerGame.UI
         }
 
         /// <summary>
-        /// Simulates Ad placement approval, halts oscillation, and commits multiplied credit parameters.
+        /// Halts oscillation, adds FULL multiplied earnings to the wallet, and triggers the 3-second delay coroutine.
         /// </summary>
         public void TriggerAdDoublerSequence()
         {
             isOscillating = false;
             watchAdButton.interactable = false;
+            claimNormalButton.interactable = false;
 
-            // Calculate the bonus addition to avoid double-adding base earnings
-            int bonusReward = (baseRunCurrency * finalSelectedMultiplier) - baseRunCurrency;
+            // Calculate full multiplied reward explicitly
+            int finalMultipliedReward = baseRunCurrency * finalSelectedMultiplier;
             
             if (playerData != null)
             {
-                playerData.totalWalletCurrency += bonusReward;
-                playerData.currentCurrencyEarnedInRun = baseRunCurrency * finalSelectedMultiplier;
+                // ADDING THE WALLET CURRENCY OFFICIALLY HERE!
+                playerData.totalWalletCurrency += finalMultipliedReward;
+                playerData.currentCurrencyEarnedInRun = finalMultipliedReward;
             }
 
-            Debug.Log($"Ad Completed! Final Reward committed with factor x{finalSelectedMultiplier}");
-            CollectNormalEarningsAndClose();
+            Debug.Log($"Ad Completed! Final Multiplied Reward committed: {finalMultipliedReward}. Waiting {postAdDelay} seconds...");
+            
+            // FIX: Start the coroutine to safely wait before transitioning to the next scene
+            StartCoroutine(WaitAndLoadNextLevel());
         }
 
+        /// <summary>
+        /// Commits standard base earnings without multipliers and advances level immediately.
+        /// </summary>
         public void CollectNormalEarningsAndClose()
         {
-            // Transition back to progression workflow or next scene loading layout safely
+            isOscillating = false;
+            watchAdButton.interactable = false;
+            claimNormalButton.interactable = false;
+
+            if (playerData != null)
+            {
+                // ADDING THE BASE VALUE OFFICIALLY HERE FOR NORMAL CLAIM!
+                playerData.totalWalletCurrency += baseRunCurrency;
+            }
+
+            Debug.Log($"Normal Claim! Base Reward committed: {baseRunCurrency}");
+            
+            // No delay needed for normal claim, transitions instantly
+            GameManager.Instance.NextLevel();
+        }
+
+        /// <summary>
+        /// Coroutine to execute the systematic delay before loading the next level index.
+        /// </summary>
+        private IEnumerator WaitAndLoadNextLevel()
+        {
+            yield return new WaitForSeconds(postAdDelay);
             GameManager.Instance.NextLevel();
         }
     }

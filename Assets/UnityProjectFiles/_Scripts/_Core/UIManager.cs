@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using RunnerGame.Core;
+using RunnerGame.Audio;
 
 namespace RunnerGame.UI
 {
@@ -15,6 +16,8 @@ namespace RunnerGame.UI
         [SerializeField] private CanvasGroup inGameHUDPanel;
         [SerializeField] private CanvasGroup winPanel;
         [SerializeField] private CanvasGroup losePanel;
+        [SerializeField] private GameObject settingsPanel;
+        [SerializeField] private GameObject shopPanel;
 
         [Header("Transition Configuration")]
         [SerializeField] private float fadeDuration = 0.4f; 
@@ -74,6 +77,7 @@ namespace RunnerGame.UI
 
             StartCoroutine(FadePanel(inGameHUDPanel, 0f, false));
             StartCoroutine(FadePanel(winPanel, 1f, true));
+            AdsManager.Instance.ShowInterstitial();
         }
 
         public void OnLevelLostTransition()
@@ -85,6 +89,7 @@ namespace RunnerGame.UI
 
             StartCoroutine(FadePanel(inGameHUDPanel, 0f, false));
             StartCoroutine(FadePanel(losePanel, 1f, true));
+            //AdsManager.Instance.ShowInterstitial();
         }
 
         private IEnumerator FadePanel(CanvasGroup cg, float targetAlpha, bool isInteractable)
@@ -114,6 +119,23 @@ namespace RunnerGame.UI
             cg.alpha = alpha;
             cg.interactable = interactable;
             cg.blocksRaycasts = interactable;
+        }
+
+        public void OpenSettings()
+        {
+            settingsPanel.SetActive(true);
+            AudioManager.Instance.PlaySFX("Click");
+        }
+
+        public void OpenShop()
+        {
+            shopPanel.SetActive(true);
+            AudioManager.Instance.PlaySFX("Click");
+        }
+
+        public void ClickSFX()
+        {
+            AudioManager.Instance.PlaySFX("Click");
         }
     }
 }

@@ -1,10 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
 namespace RunnerGame.UI
 {
     /// <summary>
-    /// Monitors and updates the live active gameplay HUD metrics (Level and Currency) directly from PlayerDataSO.
+    /// Monitors and updates live gameplay HUD metrics (Level and multiple Currency texts) directly from PlayerDataSO.
     /// </summary>
     public class PlayerHUDController : MonoBehaviour
     {
@@ -13,7 +14,9 @@ namespace RunnerGame.UI
 
         [Header("UI Text Mesh Pro Components")]
         [SerializeField] private TextMeshProUGUI levelText;
-        [SerializeField] private TextMeshProUGUI currencyText;
+        
+        [Header("Multiple Currency Text Displays")]
+        [SerializeField] private List<TextMeshProUGUI> currencyTexts = new List<TextMeshProUGUI>();
 
         private void Start()
         {
@@ -26,7 +29,7 @@ namespace RunnerGame.UI
         }
 
         /// <summary>
-        /// Reads current scriptable values and formats them cleanly into the UI text fields.
+        /// Reads current scriptable values and formats them cleanly into all registered UI text fields.
         /// </summary>
         private void UpdateHUDGraphics()
         {
@@ -38,10 +41,16 @@ namespace RunnerGame.UI
                 levelText.text = $"LEVEL {playerData.currentLevelIndex + 1}";
             }
 
-            // Sync total progressive master wallet metrics
-            if (currencyText != null)
+            // FIX: المرور على كل نصوص العملات المسجلة وتحديثها بالقيمة الحالية للمحفظة
+            if (currencyTexts != null && currencyTexts.Count > 0)
             {
-                currencyText.text = $"${playerData.totalWalletCurrency}";
+                for (int i = 0; i < currencyTexts.Count; i++)
+                {
+                    if (currencyTexts[i] != null)
+                    {
+                        currencyTexts[i].text = $"${playerData.totalWalletCurrency}";
+                    }
+                }
             }
         }
     }

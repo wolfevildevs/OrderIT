@@ -1,7 +1,7 @@
 <dependencies>
-  <unityversion>5.10.0.0</unityversion>
+  <unityversion>5.11.0.0</unityversion>
   <androidPackages>
-    <androidPackage spec="com.unity3d.ads-mediation:unityads-adapter:5.10.0">
+    <androidPackage spec="com.unity3d.ads-mediation:unityads-adapter:5.11.0">
     </androidPackage>
   </androidPackages>
   <androidPackages>

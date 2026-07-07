@@ -9828,7 +9828,6 @@ GameObject:
   m_Component:
   - component: {fileID: 957595013}
   - component: {fileID: 957595014}
-  - component: {fileID: 957595015}
   m_Layer: 0
   m_Name: AdsManager
   m_TagString: Untagged
@@ -9865,23 +9864,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AdsManager
   androidAppKey: 2294896d5
   iosAppKey: 
-  useTestAds: 0
+  useTestAds: 1
   bannerAdUnitId: d9efqwebxs1jmi0i
   interstitialAdUnitId: 1mi5eecctagiva02
   rewardedAdUnitId: 0wsuks0u3wl8d6jp
---- !u!114 &957595015
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 957595011}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d264c6e0f4c25f4dbecc286531b8f90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ISScript
-  nextLevelName: 
 --- !u!1 &960581346
 GameObject:
   m_ObjectHideFlags: 0

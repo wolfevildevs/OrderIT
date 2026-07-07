@@ -77,7 +77,7 @@ namespace RunnerGame.UI
 
             StartCoroutine(FadePanel(inGameHUDPanel, 0f, false));
             StartCoroutine(FadePanel(winPanel, 1f, true));
-            AdsManager.Instance.ShowInterstitial();
+            ISScript.Instance.ShowFullAd();
         }
 
         public void OnLevelLostTransition()
@@ -125,12 +125,14 @@ namespace RunnerGame.UI
         {
             settingsPanel.SetActive(true);
             AudioManager.Instance.PlaySFX("Click");
+            ISScript.Instance.ShowFullAd();
         }
 
         public void OpenShop()
         {
             shopPanel.SetActive(true);
             AudioManager.Instance.PlaySFX("Click");
+            ISScript.Instance.ShowFullAd();
         }
 
         public void ClickSFX()

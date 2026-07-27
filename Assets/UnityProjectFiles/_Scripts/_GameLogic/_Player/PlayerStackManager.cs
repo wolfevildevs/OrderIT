@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using RunnerGame.Audio;
 
 namespace RunnerGame.Player
 {
@@ -70,6 +71,7 @@ namespace RunnerGame.Player
             if (other.CompareTag("Collectible") || other.gameObject.name.Contains("Box"))
             {
                 AddNewBoxToStack(other.transform);
+                AudioManager.Instance.PlaySFX("box");
             }
         }
 

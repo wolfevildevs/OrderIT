@@ -1,5 +1,6 @@
 using UnityEngine;
 using RunnerGame.Player;
+using RunnerGame.Audio;
 
 namespace RunnerGame.Obstacles
 {
@@ -13,9 +14,9 @@ namespace RunnerGame.Obstacles
         [Tooltip("Assign the explosion particle system prefab here.")]
         [SerializeField] private GameObject explosionVFXPrefab;
 
-        [Header("Audio Settings (Optional)")]
-        [Tooltip("Assign an optional audio prefab or clip if you want a sound effect on detonation.")]
-        [SerializeField] private AudioClip explosionSound;
+        //[Header("Audio Settings (Optional)")]
+        //[Tooltip("Assign an optional audio prefab or clip if you want a sound effect on detonation.")]
+        //[SerializeField] private AudioClip explosionSound;
 
         private bool hasDetonated = false;
 
@@ -59,10 +60,11 @@ namespace RunnerGame.Obstacles
             }
 
             // --- 2. PLAY SOUND EFFECT (Optional) ---
-            if (explosionSound != null)
-            {
-                AudioSource.PlayClipAtPoint(explosionSound, transform.position);
-            }
+            
+            //AudioSource.PlayClipAtPoint(explosionSound, transform.position);
+            //AudioManager.Instance.PlaySFX("death");
+            AudioManager.Instance.PlaySFX("explosion");
+            
 
             // --- 3. KILL THE PLAYER INSTANTLY ---
             player.Die();

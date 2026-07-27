@@ -1,5 +1,6 @@
 using UnityEngine;
 using RunnerGame.Player;
+using RunnerGame.Audio;
 
 namespace RunnerGame.Obstacles
 {
@@ -16,6 +17,7 @@ namespace RunnerGame.Obstacles
                 Debug.Log("<color=red>[Obstacle] Player hit an instant death hazard!</color>");
                 
                 // Call the definitive kill function inside player physics layers
+                //AudioManager.Instance.PlaySFX("death");
                 player.Die();
             }
         }

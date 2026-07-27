@@ -24,7 +24,7 @@ namespace RunnerGame.Audio
         [SerializeField] private AudioClip levelLoseClip;
         [SerializeField] private AudioClip buyClip;
         [SerializeField] private AudioClip noMoneyhClip;
-
+        [SerializeField] private AudioClip pickUpClip;
 
         private void Awake()
         {
@@ -105,6 +105,10 @@ namespace RunnerGame.Audio
                 case "nomoney":
                 case "nomoneyh":
                     clipToPlay = noMoneyhClip;
+                    break;
+                case "pick":
+                case "Up":
+                    clipToPlay = pickUpClip;
                     break;
                 default:
                     Debug.LogWarning($"AudioManager: SFX named '{clipName}' is not defined in the system!");

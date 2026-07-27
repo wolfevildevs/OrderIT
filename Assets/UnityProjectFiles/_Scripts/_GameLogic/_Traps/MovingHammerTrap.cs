@@ -1,5 +1,6 @@
 using UnityEngine;
 using RunnerGame.Player;
+using RunnerGame.Audio;
 
 namespace RunnerGame.Obstacles
 {
@@ -30,11 +31,13 @@ namespace RunnerGame.Obstacles
         private void OnTriggerEnter(Collider other)
         {
             ProcessImpact(other.gameObject);
+            AudioManager.Instance.PlaySFX("hammer");
         }
 
         private void OnCollisionEnter(Collision collision)
         {
             ProcessImpact(collision.gameObject);
+            AudioManager.Instance.PlaySFX("hammer");
         }
 
         /// <summary>

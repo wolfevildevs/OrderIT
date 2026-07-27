@@ -1,4 +1,5 @@
 using UnityEngine;
+using RunnerGame.Audio;
 
 namespace RunnerGame.Player
 {
@@ -214,7 +215,8 @@ namespace RunnerGame.Player
         {
             if (playerData != null) playerData.isDead = true;
             rb.linearVelocity = Vector3.zero;
-            rb.isKinematic = true; 
+            rb.isKinematic = true;
+            AudioManager.Instance.PlaySFX("death");
         }
 
         private void OnDrawGizmosSelected()

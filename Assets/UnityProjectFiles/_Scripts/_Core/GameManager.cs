@@ -30,6 +30,12 @@ namespace RunnerGame.Core
         {
             if (Instance == null) Instance = this;
             else Destroy(gameObject);
+
+            // Load saved progress from PlayerPrefs into PlayerDataSO on boot
+            if (playerData != null)
+            {
+                playerData.LoadPersistentData();
+            }
         }
 
         private void Start()
@@ -74,6 +80,9 @@ namespace RunnerGame.Core
                 playerData.currentCurrencyEarnedInRun = totalCalculatedCurrency;
                 playerData.totalWalletCurrency += totalCalculatedCurrency; 
                 
+                // Save updated wallet balance to PlayerPrefs
+                playerData.SavePersistentData();
+                
                 Debug.Log($"Level Completed! Earned: {totalCalculatedCurrency}. Total Wallet: {playerData.totalWalletCurrency}");
             }
 
@@ -116,9 +125,12 @@ namespace RunnerGame.Core
             }
             else
             {
-                Debug.LogWarning("No more unique levels inside GameLevelsDatabaseSO! Restarting from Level 1 or clamping.");
-                playerData.currentLevelIndex = levelsDatabase.TotalLevels - 1;
+                Debug.LogWarning("No more unique levels inside GameLevelsDatabaseSO! Loop back or clamp based on database design.");
+                playerData.currentLevelIndex = nextLevelIndex; // Let GameLevelsDatabaseSO handle safe loop indexing
             }
+            
+            // Persist the updated level index to PlayerPrefs before reloading the scene
+            playerData.SavePersistentData();
             
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }

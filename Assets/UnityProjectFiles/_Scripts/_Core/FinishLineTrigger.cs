@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using RunnerGame.Player;
 using RunnerGame.Core;
+using RunnerGame.Audio;
 
 namespace RunnerGame.Level
 {
@@ -75,6 +76,7 @@ namespace RunnerGame.Level
                     if (boxVFXPrefab != null && boxTargetPoint != null)
                     {
                         Instantiate(boxVFXPrefab, boxTargetPoint.position, Quaternion.identity);
+                        AudioManager.Instance.PlaySFX("box");
                     }
 
                     Destroy(currentBox.gameObject);

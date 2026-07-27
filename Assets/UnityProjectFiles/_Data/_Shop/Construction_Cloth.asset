@@ -16,4 +16,4 @@ MonoBehaviour:
   itemName: 
   itemIcon: {fileID: 21300000, guid: 9586f2ae43c34bc4d844ff1a5f9a87cc, type: 3}
   sceneObjectName: Construction_Cloth
-  cost: 1000
+  cost: 5

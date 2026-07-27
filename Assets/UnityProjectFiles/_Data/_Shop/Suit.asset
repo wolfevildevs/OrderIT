@@ -16,4 +16,4 @@ MonoBehaviour:
   itemName: 
   itemIcon: {fileID: 21300000, guid: e6b9d233f82c6d245a4e5d9266118932, type: 3}
   sceneObjectName: Suit
-  cost: 1000
+  cost: 5

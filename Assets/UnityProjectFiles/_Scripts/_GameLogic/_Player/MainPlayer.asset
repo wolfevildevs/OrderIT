@@ -17,10 +17,10 @@ MonoBehaviour:
   roadLimitX: 10
   currentScore: 0
   currentCurrencyEarnedInRun: 0
-  isDead: 1
+  isDead: 0
   isMoving: 0
   currentBoxCount: 0
-  totalWalletCurrency: 0
+  totalWalletCurrency: 5000
   currentLevelIndex: 0
   jumpForce: 11
   customGravity: -25

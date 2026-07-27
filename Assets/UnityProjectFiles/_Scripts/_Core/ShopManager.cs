@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using RunnerGame.Player;
+using RunnerGame.Audio;
 
 namespace RunnerGame.Shop
 {
@@ -58,6 +59,7 @@ namespace RunnerGame.Shop
                 // تجهيز العنصر مباشرة لأنه مشترى بالفعل
                 playerData.equippedItemId = item.itemId;
                 Debug.Log($"Item equipped safely: {item.itemName}");
+                AudioManager.Instance.PlaySFX("pick");
             }
             else
             {
@@ -67,6 +69,7 @@ namespace RunnerGame.Shop
                     playerData.totalWalletCurrency -= item.cost; // خصم الفلوس
                     playerData.PurchaseItem(item.itemId);        // تسجيل الشراء دائمًا
                     playerData.equippedItemId = item.itemId;     // تجهيزه تلقائياً
+                    AudioManager.Instance.PlaySFX("buy");
                     Debug.Log($"Purchase successful for: {item.itemName}");
                 }
             }

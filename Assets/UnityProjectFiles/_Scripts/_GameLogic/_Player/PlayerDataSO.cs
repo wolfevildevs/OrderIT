@@ -27,6 +27,48 @@ public class PlayerDataSO : ScriptableObject
     [Header("Shop Save Data Matrix")]
     [SerializeField] private string _equippedItemId = "Default";
 
+    // PlayerPrefs Save Keys
+    private const string LEVEL_INDEX_KEY = "Saved_CurrentLevelIndex";
+    private const string WALLET_CURRENCY_KEY = "Saved_TotalWalletCurrency";
+
+    /// <summary>
+    /// Loads persistent player progress (level index and wallet currency) from PlayerPrefs.
+    /// Call this method on game startup or when initializing the level.
+    /// </summary>
+    public void LoadPersistentData()
+    {
+        currentLevelIndex = PlayerPrefs.GetInt(LEVEL_INDEX_KEY, 0);
+        totalWalletCurrency = PlayerPrefs.GetInt(WALLET_CURRENCY_KEY, 0);
+    }
+
+    /// <summary>
+    /// Saves the persistent progression data (level index and wallet currency) to PlayerPrefs.
+    /// </summary>
+    public void SavePersistentData()
+    {
+        PlayerPrefs.SetInt(LEVEL_INDEX_KEY, currentLevelIndex);
+        PlayerPrefs.SetInt(WALLET_CURRENCY_KEY, totalWalletCurrency);
+        PlayerPrefs.Save();
+    }
+
+    /// <summary>
+    /// Advances player to the next level and saves progress persistently.
+    /// </summary>
+    public void CompleteCurrentLevel()
+    {
+        currentLevelIndex++;
+        SavePersistentData();
+    }
+
+    /// <summary>
+    /// Adds earned currency to the total wallet and saves progress persistently.
+    /// </summary>
+    public void AddCurrencyToWallet(int amount)
+    {
+        totalWalletCurrency += amount;
+        SavePersistentData();
+    }
+
     /// <summary>
     /// Resets only the immediate live run metrics, preserving the continuous wallet and level progression.
     /// </summary>
@@ -41,12 +83,17 @@ public class PlayerDataSO : ScriptableObject
 
     /// <summary>
     /// Absolute hard reset helper for debugging, testing, or profile wipes.
+    /// Clears saved PlayerPrefs and resets variables.
     /// </summary>
     public void FullWipeData()
     {
         ResetData();
         totalWalletCurrency = 0;
-        //currentLevelIndex = 0;
+        currentLevelIndex = 0;
+        
+        PlayerPrefs.DeleteKey(LEVEL_INDEX_KEY);
+        PlayerPrefs.DeleteKey(WALLET_CURRENCY_KEY);
+        PlayerPrefs.Save();
     }
 
     public string equippedItemId

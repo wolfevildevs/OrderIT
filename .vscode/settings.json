@@ -51,5 +51,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Order IT.sln"
+    "dotnet.defaultSolution": "OrderIT.slnx"
 }

@@ -2086,6 +2086,7 @@ GameObject:
   m_Component:
   - component: {fileID: 216565657}
   - component: {fileID: 216565658}
+  - component: {fileID: 216565659}
   m_Layer: 0
   m_Name: SettingsManager
   m_TagString: Untagged
@@ -2126,6 +2127,24 @@ MonoBehaviour:
   sfxOffButton: {fileID: 1350667875}
   vibOnButton: {fileID: 1055814316}
   vibOffButton: {fileID: 2118516660}
+--- !u!114 &216565659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 216565656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad2dd1fcd6779fc42b2001638d44451b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RunnerGame.UI.SettingsUIBinder
+  musicOnButton: {fileID: 392361229}
+  musicOffButton: {fileID: 478513603}
+  sfxOnButton: {fileID: 955194053}
+  sfxOffButton: {fileID: 143939488}
+  vibOnButton: {fileID: 1286651260}
+  vibOffButton: {fileID: 1727902262}
 --- !u!1001 &230988952
 PrefabInstance:
   m_ObjectHideFlags: 0
